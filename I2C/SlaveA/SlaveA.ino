@@ -49,7 +49,7 @@ void getEvent() {
     
     digitalWrite(isReceive, HIGH);
     delay(250);
-    digitalWrite(isReceive, LOW);\
+    digitalWrite(isReceive, LOW);
     delay(250);
     
     Serial.println(result);
