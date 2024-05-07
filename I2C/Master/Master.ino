@@ -1,27 +1,44 @@
-#define is_ready_btn 2
-#define is_active 4
+#include <Wire.h> 
 
-int is_ready_state = 1;
-bool is_ready = true;
+const int isReadyBtn = 2;
+const int isActive = 4;
+const int isReceive = 8;
+
+#define SLAVE_A_ADDR 0x09 // Slave Address
+
+int isReadyState = 1;
+bool isReady = true;
+
+byte data[2];
 
 void setup() {
   Serial.begin(9600);
-  pinMode(is_ready_btn, INPUT);
-  pinMode(is_active, OUTPUT);
+  Wire.begin();
+  pinMode(isReadyBtn, INPUT);
+  pinMode(isActive, OUTPUT);
+  pinMode(isReceive, OUTPUT);
 }
 
 void loop() {
-  is_ready_state = digitalRead(is_ready_btn);
+  isReadyState = digitalRead(isReadyBtn);
   int poten = analogRead(A0);
 
-  if (is_ready){
-    digitalWrite(is_active, HIGH);
-  } else {
-    digitalWrite(is_active, LOW);
+  if (isReadyState == LOW) {
+    isReady = !isReady;
   }
   
-  if (is_ready_state == LOW) {
-    is_ready = !is_ready;
+  if (isReady){
+    digitalWrite(isActive, HIGH);
+    Wire.beginTransmission(SLAVE_A_ADDR);
+
+    // Sending 2 bytes (int)
+    data[0] = (poten>>8) & 0xFF;
+    data[1] = poten & 0xFF;
+    Wire.write(data, 2);
+    Wire.endTransmission();
+    Serial.println(poten);   
+  } else {
+    digitalWrite(isActive, LOW);
   }
   
   delay(250);
