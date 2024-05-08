@@ -11,7 +11,7 @@ int main() {
 		0xFF -> 255 -> 11111111
 	*/
 	
-	data[0] = num >> 8; // Left Shift
+	data[0] = num >> 8; // Right Shift
 	/*
 		1111010010000111 (62599)
 		0000000011110100 (244)
@@ -32,7 +32,7 @@ int main() {
 		0000000011110100 (244)
 	*/
 	
-	result = (result << 8) | data[1]; // Right Shift
+	result = (result << 8) | data[1]; // Left Shift
 	/*
 		0000000011110100 (244)
 		<< 8
