@@ -32,7 +32,7 @@ void loop() {
     Wire.beginTransmission(SLAVE_A_ADDR);
 
     // Sending 2 bytes (int)
-    data[0] = (poten>>8) & 0xFF;
+    data[0] = poten >> 8;
     data[1] = poten & 0xFF;
     Wire.write(data, 2);
     Wire.endTransmission();
