@@ -25,8 +25,6 @@ void loop() {
   if (isReadyState == LOW) {
     isReady = !isReady;
   }
-
-  Serial.println(isReady);
   
   if (isReady == 1){
     digitalWrite(isActive, HIGH);
